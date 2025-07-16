@@ -10,6 +10,7 @@ class AppTheme {
   static const Color red = Color(0xFFFF5659);
 
   static ThemeData lighttheme = ThemeData(
+    scaffoldBackgroundColor: background_light,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: primary,
       selectedItemColor: white,
@@ -19,11 +20,61 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primary,
       foregroundColor: white,
-      shape: CircleBorder(
-        side: BorderSide(
-          color: white,
-          width: 5,
+      shape: CircleBorder(side: BorderSide(color: white, width: 5)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(
+        color: gray,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: gray,),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: gray,),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: red,),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: red,),
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: primary,
+      textStyle: TextStyle(
+        fontStyle: FontStyle.italic,
+        decoration: TextDecoration.underline,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      )
+      ),
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        color: white,
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+      titleMedium: TextStyle(
+        color: white,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
     ),
   );
