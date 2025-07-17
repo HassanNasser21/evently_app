@@ -18,18 +18,12 @@ class Evently_app extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         HomeScreen.routename: (context) => const HomeScreen(),
-        LoginScreen.routeName: (context) =>  LoginScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),
         RegesterScreen.routeName: (context) => const RegesterScreen(),
-<<<<<<< HEAD
 
-      },
-      initialRoute: LoginScreen.routeName,
-=======
         OnboardingScreens.routeName: (context) => const OnboardingScreens(),
-
       },
       initialRoute: OnboardingScreens.routeName,
->>>>>>> feature/onboarding
       theme: AppTheme.lighttheme,
       darkTheme: AppTheme.darktheme,
       themeMode: ThemeMode.light,
