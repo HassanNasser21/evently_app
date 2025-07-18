@@ -23,7 +23,7 @@ class Evently_app extends StatelessWidget {
 
         OnboardingScreens.routeName: (context) => const OnboardingScreens(),
       },
-      initialRoute: OnboardingScreens.routeName,
+      initialRoute: HomeScreen.routename,
       theme: AppTheme.lighttheme,
       darkTheme: AppTheme.darktheme,
       themeMode: ThemeMode.light,
