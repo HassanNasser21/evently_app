@@ -29,44 +29,41 @@ class AppTheme {
         fontWeight: FontWeight.w500,
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: gray,),
+        borderSide: BorderSide(color: primary),
         borderRadius: BorderRadius.circular(16),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: gray,),
+        borderSide: BorderSide(color: primary),
         borderRadius: BorderRadius.circular(16),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: red,),
+        borderSide: BorderSide(color: red),
         borderRadius: BorderRadius.circular(16),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: red,),
+        borderSide: BorderSide(color: red),
         borderRadius: BorderRadius.circular(16),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-
       style: ElevatedButton.styleFrom(
         backgroundColor: primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: primary,
-      textStyle: TextStyle(
-        fontStyle: FontStyle.italic,
-        decoration: TextDecoration.underline,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-      )
+        textStyle: TextStyle(
+          fontStyle: FontStyle.italic,
+          decoration: TextDecoration.underline,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     ),
     textTheme: TextTheme(
-       headlineSmall: TextStyle(
+      headlineSmall: TextStyle(
         color: white,
         fontSize: 24,
         fontWeight: FontWeight.w500,
