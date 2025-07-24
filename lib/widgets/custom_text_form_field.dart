@@ -6,16 +6,19 @@ class CustomTextFormField extends StatelessWidget {
   String? prefixIconImageName;
   TextEditingController? controller;
   void Function(String)? onChanged;
+  String? Function(String?)? validator;
   CustomTextFormField({
     required this.hintText,
     this.prefixIconImageName,
     this.controller,
     this.onChanged,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(

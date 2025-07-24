@@ -1,4 +1,5 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/create_event_screen.dart';
 import 'package:evently/nav_bar_icon.dart';
 import 'package:evently/taps/home/home_tap.dart';
 import 'package:evently/taps/love/love_tap.dart';
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.zero,
         color: AppTheme.primary,
         child: BottomNavigationBar(
-                  elevation: 0,
+          elevation: 0,
 
           currentIndex: currentIndex,
           onTap: (index) {
@@ -62,12 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
+        onPressed: () => Navigator.of(context).pushNamed(CreateEvent.routeName),
         child: const Icon(Icons.add, size: 36),
-
-        
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

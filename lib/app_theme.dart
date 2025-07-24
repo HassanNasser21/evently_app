@@ -10,6 +10,16 @@ class AppTheme {
   static const Color red = Color(0xFFFF5659);
 
   static ThemeData lighttheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      backgroundColor: background_light,
+      foregroundColor: primary,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
+        color: primary,
+      ),
+    ),
     scaffoldBackgroundColor: background_light,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: primary,
