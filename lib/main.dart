@@ -4,9 +4,12 @@ import 'package:evently/auth/regester_screen.dart';
 import 'package:evently/create_event_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/onboarding_screens/onboarding_screens.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const Evently_app());
 }
 
@@ -21,7 +24,7 @@ class Evently_app extends StatelessWidget {
         HomeScreen.routename: (context) => const HomeScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         RegesterScreen.routeName: (context) => const RegesterScreen(),
-CreateEvent.routeName: (context) => const CreateEvent(),
+        CreateEvent.routeName: (context) => const CreateEvent(),
         OnboardingScreens.routeName: (context) => const OnboardingScreens(),
       },
       initialRoute: HomeScreen.routename,
