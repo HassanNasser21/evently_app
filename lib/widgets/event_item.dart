@@ -1,8 +1,11 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/models/event_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EventItem extends StatelessWidget {
-  const EventItem({super.key});
+  EventModel event;
+   EventItem(this.event);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class EventItem extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Image.asset(
-            'assets/images/meeting.png',
+            'assets/images/${event.category.imageName}',
             height: screensize.height * 0.23,
             width: double.infinity,
             fit: BoxFit.fill,
@@ -30,14 +33,14 @@ class EventItem extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '21',
+                '${event.dateTime.day}',
                 style: textTheme.titleLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primary,
                 ),
               ),
               Text(
-                'May',
+                DateFormat('MMM').format(event.dateTime),
                 style: textTheme.titleSmall!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppTheme.primary,
@@ -48,7 +51,7 @@ class EventItem extends StatelessWidget {
         ),
 
         Positioned(
-          width: screensize.width-32,
+          width: screensize.width - 32,
           bottom: 8,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -61,15 +64,15 @@ class EventItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Meeting for Updating The Development Method ',
+                 event.title,
                   style: textTheme.titleSmall!.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppTheme.black,
                   ),
                   maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(width: 8),
                 InkWell(
                   onTap: () {},
                   child: const Icon(

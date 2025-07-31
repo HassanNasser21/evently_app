@@ -19,13 +19,13 @@ class LoveTap extends StatelessWidget {
               onChanged: (query) {},
             ),
             SizedBox(height: 16),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) => EventItem(),
-                separatorBuilder: (context, index) => SizedBox(height: 16),
-                itemCount: 10,
-              ),
-            ),
+            // Expanded(
+            //   child: ListView.separated(
+            //     itemBuilder: (context, index) => EventItem(),
+            //     separatorBuilder: (context, index) => SizedBox(height: 16),
+            //     itemCount: 10,
+            //   ),
+            // ),
           ],
         ),
       ),
