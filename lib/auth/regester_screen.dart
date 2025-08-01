@@ -1,5 +1,7 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/auth/login_screen.dart';
+import 'package:evently/firebase_services.dart';
+import 'package:evently/home_screen.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class _RegesterScreenState extends State<RegesterScreen> {
             CustomTextFormField(
               hintText: 'Name',
               prefixIconImageName: 'person',
-              controller: emailController,
+              controller: nameController,
             ),
             SizedBox(height: 16),
             CustomTextFormField(
@@ -75,5 +77,13 @@ class _RegesterScreenState extends State<RegesterScreen> {
     );
   }
 
-  void register() {}
+  void register() {
+    FirebaseServices.registerUser(
+      name: nameController.text,
+      email: emailController.text,
+      password: passwordController.text,
+    ).then((user){
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+    });
+  }
 }

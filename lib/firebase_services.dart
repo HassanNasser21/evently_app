@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseServices {
@@ -28,4 +30,47 @@ class FirebaseServices {
         .get();
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
+
+  static Future<UserModel> registerUser({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+    UserModel user = UserModel(
+      id: credential.user!.uid,
+      name: name,
+      email: email,
+    );
+
+    CollectionReference<UserModel> usersCollection = getusersCollection();
+    await usersCollection.doc(user.id).set(user);
+    return user;
+  }
+
+  static Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    CollectionReference<UserModel> usersCollection = getusersCollection();
+    DocumentSnapshot<UserModel> docsnapshot = await usersCollection
+        .doc(credential.user!.uid)
+        .get();
+
+    return docsnapshot.data()!;
+  }
+
+  static Future<void> logout() => FirebaseAuth.instance.signOut();
+
+  static CollectionReference<UserModel> getusersCollection() =>
+      FirebaseFirestore.instance
+          .collection('users')
+          .withConverter<UserModel>(
+            fromFirestore: (docSnapshot, _) =>
+                UserModel.fromjson(docSnapshot.data()!),
+            toFirestore: (user, _) => user.tojson(),
+          );
 }
