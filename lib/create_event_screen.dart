@@ -6,6 +6,7 @@ import 'package:evently/taps/home/tap_item.dart';
 import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -266,6 +267,7 @@ class _CreateEventState extends State<CreateEvent> {
         selectedtime!.minute,
       );
       EventModel event = EventModel(
+        userId: FirebaseAuth.instance.currentUser!.uid,
         category: selectedCategory,
         title: titlecontroller.text,
         description: descriptioncontroller.text,

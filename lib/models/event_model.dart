@@ -3,13 +3,15 @@ import 'package:evently/models/category_model.dart';
 
 class EventModel {
   String id;
+  String userId;
   CategoryModel category;
   String title;
   String description;
   DateTime dateTime;
 
   EventModel({
-     this.id='',
+    this.id = '',
+    required this.userId,
     required this.category,
     required this.title,
     required this.description,
@@ -18,6 +20,7 @@ class EventModel {
 
   Map<String, dynamic> tojson() => {
     'id': id,
+    'userId': userId,
     'category': category.id,
     'title': title,
     'description': description,
@@ -27,6 +30,7 @@ class EventModel {
   EventModel.fromjson(Map<String, dynamic> json)
     : this(
         id: json['id'],
+        userId: json['userId'],
         category: CategoryModel.categories.firstWhere(
           (category) => category.id == json['category'],
         ),
