@@ -3,6 +3,7 @@ import 'package:evently/firebase_services.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/taps/home/tap_item.dart';
+import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:flutter/foundation.dart';
@@ -31,6 +32,7 @@ class _CreateEventState extends State<CreateEvent> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Create Event')),
       body: Column(
         children: [
@@ -269,9 +271,14 @@ class _CreateEventState extends State<CreateEvent> {
         description: descriptioncontroller.text,
         dateTime: dateTime,
       );
-      FirebaseServices.createEvent(event).then((_) {
-        Navigator.of(context).pop();
-      });
+      FirebaseServices.createEvent(event)
+          .then((_) {
+            Navigator.of(context).pop();
+            UiUtils.showsuccessmessage("Event Created Successfully");
+          })
+          .catchError((_) {
+            UiUtils.showerrormessage("failed to create event");
+          });
     }
   }
 }
