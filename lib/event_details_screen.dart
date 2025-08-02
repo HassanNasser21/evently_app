@@ -1,5 +1,8 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/edit_event_screen.dart';
+import 'package:evently/firebase_services.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/ui_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -29,14 +32,20 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).pushNamed(EditEventScreen.routeName, arguments: event);
+            },
             icon: const Icon(Icons.edit),
             iconSize: 24,
             color: AppTheme.primary,
           ),
           //  SizedBox(width: 3),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              deleteEvent(event.id);
+            },
             icon: const Icon(Icons.delete),
             iconSize: 24,
             color: AppTheme.red,
@@ -159,5 +168,12 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         ),
       ),
     );
+  }
+
+  void deleteEvent(String eventId) {
+    FirebaseServices.deleteEvent(eventId).then((_) {
+      UiUtils.showerrormessage('Event deleted successfully');
+      Navigator.of(context).pop();
+    });
   }
 }

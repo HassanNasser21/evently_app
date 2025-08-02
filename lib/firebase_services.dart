@@ -95,4 +95,15 @@ class FirebaseServices {
       'favoriteEventsIds': FieldValue.arrayRemove([eventId]),
     });
   }
+
+
+  static Future<void> updateEvent(EventModel event) async {
+  final doc = getEventsCollection().doc(event.id);
+  await doc.update(event.tojson());
+}
+
+static Future<void> deleteEvent(String eventId) async {
+  final doc = getEventsCollection().doc(eventId);
+  await doc.delete();
+}
 }
