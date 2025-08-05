@@ -6,13 +6,19 @@ import 'package:evently/edit_event_screen.dart';
 import 'package:evently/event_details_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/onboarding_screens/onboarding_screens.dart';
+import 'package:evently/providers/events_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const Evently_app());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => EventsProvider()..getevents(),
+      child: Evently_app(),
+    ),
+  );
 }
 
 class Evently_app extends StatelessWidget {

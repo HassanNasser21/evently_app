@@ -4,9 +4,11 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/firebase_services.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/events_provider.dart';
 import 'package:evently/taps/home/home_header.dart';
 import 'package:evently/widgets/event_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeTap extends StatefulWidget {
   HomeTap({super.key});
@@ -16,48 +18,25 @@ class HomeTap extends StatefulWidget {
 }
 
 class _HomeTapState extends State<HomeTap> {
-  List<EventModel> allevents = [];
-  List<EventModel> filteredEvents = [];
-
   @override
-  void initState() {
-    super.initState();
-    getevents();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
+    EventsProvider eventsProvider = Provider.of<EventsProvider>(context);
     return Column(
       children: [
-        HomeHeader(filterEvents: filterEvents),
+        HomeHeader(),
         SizedBox(height: 16),
         Expanded(
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemBuilder: (context, index) => EventItem(filteredEvents[index]),
+            itemBuilder: (context, index) => EventItem(eventsProvider.filteredEvents[index]),
             separatorBuilder: (context, index) => SizedBox(height: 16),
-            itemCount: filteredEvents.length,
+            itemCount: eventsProvider.filteredEvents.length,
           ),
         ),
       ],
     );
-  }
-
-  Future<void> getevents() async {
-    allevents = await FirebaseServices.getEvents();
-    filteredEvents = allevents;
-    setState(() {});
-  }
-
-  void filterEvents(CategoryModel? category) {
-    if (category == null) {
-      filteredEvents = allevents;
-      setState(() {});
-    } else {
-      filteredEvents = allevents
-          .where((event) => event.category == category)
-          .toList();
-      setState(() {});
-    }
   }
 }
