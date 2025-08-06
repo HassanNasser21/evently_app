@@ -1,21 +1,29 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/event_details_screen.dart';
+import 'package:evently/firebase_services.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/events_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventItem extends StatelessWidget {
   EventModel event;
-   EventItem(this.event);
+  EventItem(this.event);
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    bool isFavourite = userProvider.checkIsEventFavourite(event.id);
     Size screensize = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(EventDetailsScreen.routeName, arguments: event);
+        Navigator.of(
+          context,
+        ).pushNamed(EventDetailsScreen.routeName, arguments: event);
       },
       child: Stack(
         children: [
@@ -54,7 +62,7 @@ class EventItem extends StatelessWidget {
               ],
             ),
           ),
-      
+
           Positioned(
             width: screensize.width - 32,
             bottom: 8,
@@ -69,7 +77,7 @@ class EventItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                   event.title,
+                    event.title,
                     style: textTheme.titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppTheme.black,
@@ -79,9 +87,21 @@ class EventItem extends StatelessWidget {
                   ),
                   SizedBox(width: 8),
                   InkWell(
-                    onTap: () {},
-                    child: const Icon(
-                      Icons.favorite,
+                    onTap: () {
+                      if (isFavourite) {
+                        userProvider.removeEventFromFavourite(event.id);
+                        Provider.of<EventsProvider>(
+                          context,
+                          listen: false,
+                        ).filterfavouriteevents(
+                          userProvider.currentUser!.favoriteEventsIds,
+                        );
+                      } else {
+                        userProvider.addEventToFavourite(event.id);
+                      }
+                    },
+                    child: Icon(
+                      isFavourite ? Icons.favorite : Icons.favorite_outline,
                       size: 24,
                       color: AppTheme.primary,
                     ),

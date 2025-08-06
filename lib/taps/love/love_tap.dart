@@ -1,4 +1,5 @@
 import 'package:evently/providers/events_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:evently/widgets/event_item.dart';
@@ -18,8 +19,12 @@ class _LoveTapState extends State<LoveTap> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPersistentFrameCallback((_) {
-      eventsProvider.filterfavouriteevents([]);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      List<String> favouriteEventsIds = Provider.of<UserProvider>(
+        context,
+        listen: false,
+      ).currentUser!.favoriteEventsIds;
+      eventsProvider.filterfavouriteevents(favouriteEventsIds);
     });
   }
 
