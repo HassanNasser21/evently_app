@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently/models/event_model.dart';
 import 'package:evently/providers/events_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
@@ -15,6 +19,8 @@ class LoveTap extends StatefulWidget {
 
 class _LoveTapState extends State<LoveTap> {
   late EventsProvider eventsProvider;
+  TextEditingController searchController = TextEditingController();
+  List<EventModel> originalFavouriteEvents = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -25,6 +31,7 @@ class _LoveTapState extends State<LoveTap> {
         listen: false,
       ).currentUser!.favoriteEventsIds;
       eventsProvider.filterfavouriteevents(favouriteEventsIds);
+      originalFavouriteEvents = List.from(eventsProvider.favouriteEvents);
     });
   }
 
@@ -39,7 +46,11 @@ class _LoveTapState extends State<LoveTap> {
             CustomTextFormField(
               hintText: 'Search',
               prefixIconImageName: 'search',
-              onChanged: (query) {},
+
+              onChanged: (value) {
+                searchEvents(value);
+              },
+              controller: searchController,
             ),
             SizedBox(height: 16),
             Expanded(
@@ -54,5 +65,16 @@ class _LoveTapState extends State<LoveTap> {
         ),
       ),
     );
+  }
+
+  void searchEvents(String query) {
+    // originalFavouriteEvents = eventsProvider.favouriteEvents;
+    setState(() {
+      eventsProvider.favouriteEvents = originalFavouriteEvents
+          .where(
+            (event) => event.title.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    });
   }
 }
