@@ -2,11 +2,13 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/auth/login_screen.dart';
 import 'package:evently/firebase_services.dart';
 import 'package:evently/home_screen.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/custom_text_form_field.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegesterScreen extends StatefulWidget {
   static const String routeName = '/regester';
@@ -113,6 +115,10 @@ class _RegesterScreenState extends State<RegesterScreen> {
             password: passwordController.text,
           )
           .then((user) {
+            Provider.of<UserProvider>(
+              context,
+              listen: false,
+            ).UpdateCurrentUser(user);
             Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
           })
           .catchError((error) {
