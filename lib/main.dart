@@ -1,12 +1,32 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/auth/login_screen.dart';
 import 'package:evently/auth/regester_screen.dart';
+import 'package:evently/create_event_screen.dart';
+import 'package:evently/edit_event_screen.dart';
+import 'package:evently/event_details_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/onboarding_screens/onboarding_screens.dart';
+import 'package:evently/providers/events_provider.dart';
+import 'package:evently/providers/user_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const Evently_app());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(
+          create: (context) => EventsProvider()..getevents(),
+        ),
+      ],
+
+      child: Evently_app(),
+    ),
+  );
 }
 
 class Evently_app extends StatelessWidget {
@@ -20,10 +40,12 @@ class Evently_app extends StatelessWidget {
         HomeScreen.routename: (context) => const HomeScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         RegesterScreen.routeName: (context) => const RegesterScreen(),
-
+        CreateEvent.routeName: (context) => const CreateEvent(),
         OnboardingScreens.routeName: (context) => const OnboardingScreens(),
+        EventDetailsScreen.routeName: (context) => const EventDetailsScreen(),
+        EditEventScreen.routeName: (context) => const EditEventScreen(),
       },
-      initialRoute: HomeScreen.routename,
+      initialRoute: LoginScreen.routeName,
       theme: AppTheme.lighttheme,
       darkTheme: AppTheme.darktheme,
       themeMode: ThemeMode.light,
